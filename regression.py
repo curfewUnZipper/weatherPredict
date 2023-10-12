@@ -9,4 +9,38 @@ from sklearn.linear_model import LinearRegression
 #from google.colab import drive
 #drive.mount('/drive')
 
+import csv
 
+# Opeing csv and storing data
+f = open('/drive/My Drive/Colab Notebooks/data.csv', 'r') #change the path
+csvreader = csv.reader(f)
+headings = [] 
+rows = [] 
+headings=next(csvreader)
+for r in csvreader:
+    rows.append(r)
+
+#trial to see if loaded data is correct
+pd.DataFrame(rows,columns=headings)[0:9] 
+
+
+#regression work
+
+x= np.array([])
+for i in range(0,9):
+  x = np.append(x,float(rows[i][4]))
+x= x.reshape(-1,1)
+
+y=np.array([])
+for i in range(0,9):
+  y=np.append(y,float(rows[i][1]))
+#y=y.reshape(-1,1) #2d inputs, give out 2d slope lol
+
+model = LinearRegression()
+model.fit(x,y) #return self, i.e saved as model variable itself
+r_sq = model.score(x,y)
+print(f"coeff of determination: {r_sq}")
+print(f"intercept c= {model.intercept_}")
+print(f"slope m= {model.coef_}")
+
+print(f"predict price with 3000 sqft: {model.predict(np.array([3000]).reshape(-1,1))}")
