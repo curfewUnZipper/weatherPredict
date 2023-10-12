@@ -14,7 +14,7 @@ from sklearn.linear_model import LinearRegression
 import csv
 
 # Opeing csv and storing data
-f = open('weatherdata.csv', 'r') #change the path
+f = open('weatherData.csv', 'r') #change the path
 csvreader = csv.reader(f)
 headings = [] 
 rows = [] 
