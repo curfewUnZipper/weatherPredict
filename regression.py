@@ -1,9 +1,11 @@
+#required libraries; run command on cmd
+#pip install numpy pandas matplotlib scikit-learn
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 #from sklearn import preprocessing, svm
 #from sklearn.model_selection import train_test_split
-from sklearn.linear_model import LinearRegression
+from sklearn.linear_model import LinearRegression 
 
 #mounting drive, used when in google colab
 #from google.colab import drive
@@ -12,7 +14,7 @@ from sklearn.linear_model import LinearRegression
 import csv
 
 # Opeing csv and storing data
-f = open('/drive/My Drive/Colab Notebooks/data.csv', 'r') #change the path
+f = open('data.csv', 'r') #change the path
 csvreader = csv.reader(f)
 headings = [] 
 rows = [] 
@@ -38,9 +40,9 @@ for i in range(0,9):
 
 model = LinearRegression()
 model.fit(x,y) #return self, i.e saved as model variable itself
-r_sq = model.score(x,y)
+"""r_sq = model.score(x,y)
 print(f"coeff of determination: {r_sq}")
 print(f"intercept c= {model.intercept_}")
-print(f"slope m= {model.coef_}")
+print(f"slope m= {model.coef_}")"""
 
 print(f"predict price with 3000 sqft: {model.predict(np.array([3000]).reshape(-1,1))}")
