@@ -55,7 +55,7 @@ model = LinearRegression().fit(x,y) #return self, i.e saved as model variable it
 #print(f"intercept c= {model.intercept_}")
 #print(f"slope m= {model.coef_}")
 
-a=input("Enter Date-Time as 13/01/2023 13:00 -> ")
+a=input("Enter Date-Time (For Example: 13/01/2023 13:00) -> ")
 a=datetime.strptime(a,"%d/%m/%Y %H:%M")
 a= int(f"{a.day:02d}{a.month:02d}{a.hour:02d}")
-print(f"Weather Prediction: {pd.DataFrame(model.predict(np.array(a).reshape(-1,1)),columns=headings[1:-1])}")
+print(f"Weather Prediction:\n {pd.DataFrame(model.predict(np.array(a).reshape(-1,1)),columns=headings[1:-1])}")
