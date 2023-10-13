@@ -26,24 +26,37 @@ for r in csvreader:
 pd.DataFrame(rows,columns=headings)[0:9] 
 
 
-#regression work
 
+#multiple regression
+#x-axis date-time in string
+from datetime import datetime
 x= np.array([])
-for i in range(0,9):
-  x = np.append(x,float(rows[i][4]))
-x= x.reshape(-1,1)
-
+for i in range(len(rows)):
+  j = rows[i][0]
+  try:
+    j=datetime.strptime(j,"%m/%d/%Y %H:%M")
+  #print(f"{j.day:02d}{j.month:02d}{j.year:04d}{j.hour:02d}") #example: 1805200314
+  except ValueError:
+    j=datetime.strptime(j,"%m/%d/%y %H:%M")
+  j= int(f"{j.day:02d}{j.month:02d}{j.hour:02d}")
+  #print(type(j),j)
+  x = np.append(x,j)
+x= x.astype(np.float64).reshape(-1,1)
+#print(x)
+#y axis array multi-dim of everything else
 y=np.array([])
-for i in range(0,9):
-  y=np.append(y,float(rows[i][1]))
-#y=y.reshape(-1,1) #2d inputs, give out 2d slope lol
+for i in range(len(rows)):
+  y= np.append(y,rows[i][1:len(rows[i])-1])
+y=y.astype(np.float64).reshape(-1,len(rows[0])-2)
+#print(pd.DataFrame(y,columns=headings[1:len(headings)-1])[0:9])
 
-model = LinearRegression()
-model.fit(x,y) #return self, i.e saved as model variable itself
-"""r_sq = model.score(x,y)
-print(f"coeff of determination: {r_sq}")
-print(f"intercept c= {model.intercept_}")
-print(f"slope m= {model.coef_}")"""
+model = LinearRegression().fit(x,y) #return self, i.e saved as model variable itself
+#r_sq = model.score(x,y)
+#print(f"index of determination: {r_sq}")
+#print(f"intercept c= {model.intercept_}")
+#print(f"slope m= {model.coef_}")
 
-a=float(input("Enter area in sqft: "))
-print(f"Price prediction in $: {model.predict(np.array([a]).reshape(-1,1))}")
+a=input("Enter Date-Time as 13/01/2023 13:00 -> ")
+a=datetime.strptime(a,"%d/%m/%Y %H:%M")
+a= int(f"{a.day:02d}{a.month:02d}{a.hour:02d}")
+print(f"Weather Prediction: {pd.DataFrame(model.predict(np.array(a).reshape(-1,1)),columns=headings[1:-1])}")
