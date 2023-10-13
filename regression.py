@@ -1,18 +1,14 @@
 #required libraries; run command on cmd
-#pip install numpy pandas matplotlib scikit-learn
+#pip install numpy pandas scikit-learn
 import numpy as np
 import pandas as pd
-import matplotlib.pyplot as plt
-#from sklearn import preprocessing, svm
-#from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression 
-
+from datetime import datetime
 #mounting drive, used when in google colab
 #from google.colab import drive
 #drive.mount('/drive')
 
 import csv
-
 # Opeing csv and storing data
 f = open('weatherData.csv', 'r') #change the path
 csvreader = csv.reader(f)
@@ -28,8 +24,8 @@ pd.DataFrame(rows,columns=headings)[0:9]
 
 
 #multiple regression
+
 #x-axis date-time in string
-from datetime import datetime
 x= np.array([])
 for i in range(len(rows)):
   j = rows[i][0]
@@ -43,6 +39,8 @@ for i in range(len(rows)):
   x = np.append(x,j)
 x= x.astype(np.float64).reshape(-1,1)
 #print(x)
+
+
 #y axis array multi-dim of everything else
 y=np.array([])
 for i in range(len(rows)):
@@ -50,6 +48,7 @@ for i in range(len(rows)):
 y=y.astype(np.float64).reshape(-1,len(rows[0])-2)
 #print(pd.DataFrame(y,columns=headings[1:len(headings)-1])[0:9])
 
+#training model
 model = LinearRegression().fit(x,y) #return self, i.e saved as model variable itself
 #r_sq = model.score(x,y)
 #print(f"index of determination: {r_sq}")
