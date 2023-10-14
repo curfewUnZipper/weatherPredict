@@ -4,24 +4,6 @@ import numpy as np
 import pandas as pd
 from sklearn.linear_model import LinearRegression 
 from datetime import datetime
-#mounting drive, used when in google colab
-#from google.colab import drive
-#drive.mount('/drive')
-
-import csv
-# Opeing csv and storing data
-f = open('weatherData.csv', 'r') #change the path
-csvreader = csv.reader(f)
-headings = [] 
-rows = [] 
-headings=next(csvreader)
-for r in csvreader:
-    rows.append(r)
-
-#trial to see if loaded data is correct
-pd.DataFrame(rows,columns=headings)[0:9] 
-
-
 
 rows= pd.read_csv("https://raw.githubusercontent.com/curfewUnZipper/weatherPredict/0df5cc7cb69d74e1b820fc6d8eec555461192dea/weatherData.csv")
 cols = list(rows.columns)
